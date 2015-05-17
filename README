@@ -1,3 +1,3 @@
-First release just includes a small bash script to run AFL on multicore machines.
+A couple of helpful scripts when you want to prepare a machine, compile AFL, compile the target binary and run AFL (crash finding)
 
-More python tools coming up...
+If you are looking for crash analysis, check out https://github.com/floyd-fuh/afl-crash-analyzer

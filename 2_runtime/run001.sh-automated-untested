@@ -9,7 +9,6 @@ INPUT_OUTPUT_LOC="/opt/test/floyds"
 AFL_FUZZ_ARGS="" #-t 1200 or so
 #Optional options:
 DO_DETERMINISTIC="true"
-TMP_LOC="/tmp"
 MAX_NUMBER_OF_INSTANCES="005"
 FIRST_TIME_INPUT_DIR="input"
 #End Options
@@ -72,10 +71,9 @@ CMD="afl-fuzz -T $FUZZING_INSTANCE_NAME -i $INPUT_OUTPUT_LOC/$INPUT_DIR -o $INPU
 echo "Executing the following command now:"
 echo "$CMD"
 echo
-if ! screen -ls|grep -iq "Attached"; then
-    echo "You are not running screen. Can't let you do that."
-    exit 1
+if [ "$SCRIPT_NUMBER" = "001" ]; then
+    echo "Opening screen, naming it fuzzer"
+    screen -m -d fuzzer
 fi
-echo "Are you in screen?"
-sleep 5
-$CMD
+screen -r fuzzer -X screen
+screen -r fuzzer -X stuff "$CMD \n"
