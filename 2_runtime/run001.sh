@@ -49,15 +49,20 @@ if [ "$SCRIPT_NUMBER" = "001" ]; then
         NUMBER_PLUS_ONE=$((10#$NUMBER + 1))
         NUMBER_PLUS_ONE_THREE_DIGITS="`printf %03d $NUMBER_PLUS_ONE`"
         OUTPUT="output-$NUMBER_PLUS_ONE_THREE_DIGITS"
-        echo "Looks like there is a directory $INPUT, using that as an input."
         echo "Using $OUTPUT as the output directory."
-        echo "ATTENTION: Only using input from results of fuzzing instance 1, which might not have synced when you aborted?"
-        echo "$INPUT/$BIN_NAME-001" > $SCRIPT_DIR/$INPUT_DEFINING_FILE_NAME
+        echo "Looks like there is a directory $INPUT, using that as an input."
+        echo "$INPUT/$BIN_NAME" > $SCRIPT_DIR/$INPUT_DEFINING_FILE_NAME
         echo "$OUTPUT" > $SCRIPT_DIR/$OUTPUT_DEFINING_FILE_NAME
     fi
 fi
 
 INPUT_DIR="`cat $SCRIPT_DIR/$INPUT_DEFINING_FILE_NAME`"
+if [ -d $INPUT_OUTPUT_LOC/${INPUT_DIR}-${SCRIPT_NUMBER} ]; then
+    INPUT_DIR="${INPUT_DIR}-${SCRIPT_NUMBER}"
+else
+    INPUT_DIR="${INPUT_DIR}-001"
+fi
+
 OUTPUT_DIR="`cat $SCRIPT_DIR/$OUTPUT_DEFINING_FILE_NAME`"
 
 if [ "$SCRIPT_NUMBER" = "001" ] && [ "$DO_DETERMINISTIC" = "true" ];  then
